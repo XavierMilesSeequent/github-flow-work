@@ -51,5 +51,7 @@ jobs:
 
       - name: "Print something else"
         if: ${{ github.event_name == 'repository_dispatch' }}
+        env:
+          CLIENT_PAYLOAD: ${{ github.event.client_payload }}
         run: |
-          echo ${{ github.event.client_payload }}
+          echo $CLIENT_PAYLOAD
