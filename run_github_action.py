@@ -10,7 +10,7 @@ import github
 import requests
 
 GITHUB_TOKEN = os.environ["GITHUB_TOKEN"]
-GITHUB_ORG = "XavierMilesSeequent"
+GITHUB_USER = "XavierMilesSeequent"
 GITHUB_REPO = "github-flow-work"
 BUILD_SCRIPTS_WORKFLOW_NAME = "run_ui_tests.yml"
 
@@ -29,7 +29,7 @@ def parse_log_line(line: str) -> str:
 def build_dependencies_github_workflow():
     auth = github.Auth.Token(GITHUB_TOKEN)
     gh = github.Github(auth=auth)
-    org = gh.get_organization(GITHUB_ORG)
+    org = gh.get_user(GITHUB_USER)
     build_scripts_repo = org.get_repo(GITHUB_REPO)
     build_scripts_workflow = build_scripts_repo.get_workflow(BUILD_SCRIPTS_WORKFLOW_NAME)
 
