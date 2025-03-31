@@ -7,7 +7,10 @@ pipeline {
     stages {
         stage('Example stage 1') {
             steps {
-                powershell "python run_github_action.py"
+                powershell """
+                    python -m pip install -r requirements.txt
+                    python run_github_action.py
+                """
             }
         }
     }

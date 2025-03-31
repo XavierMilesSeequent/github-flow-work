@@ -2,12 +2,11 @@ from io import BytesIO
 import os
 import re
 import time
-import dataclasses
 import uuid
 import zipfile
 
+import sys
 import github
-import loggers
 import requests
 
 GITHUB_TOKEN = os.environ["GITHUB_TOKEN"]
@@ -72,9 +71,9 @@ def trigger_dependencies_workflow_run(
     return workflow_run, workflow_job
 
 
-def monitor_status(workflow_run: github.Workflow, workflow_job: github.WorkflowJob, logger: loggers.TeamCityLogger):
+def monitor_status(workflow_run: github.Workflow, workflow_job: github.WorkflowJob):
     # Monitor the status and wait for the workflow to complete
-    logger.info("GitHub Workflow Run Monitoring:")
+    print("GitHub Workflow Run Monitoring:")
     poll_status_step(workflow_job)
     while workflow_run.conclusion is None:
         time.sleep(5)
@@ -83,9 +82,9 @@ def monitor_status(workflow_run: github.Workflow, workflow_job: github.WorkflowJ
     print(f"Workflow run completed: {workflow_run.conclusion}")
 
 
-def get_workflow_run_logs(workflow_run, tc_logger: loggers.TeamCityLogger):
+def get_workflow_run_logs(workflow_run):
     # Get the raw logs from the workflow run
-    tc_logger.info("GitHub Workflow Run Logs:")
+    print("GitHub Workflow Run Logs:")
     headers = {"Authorization": f"Bearer {GITHUB_TOKEN}", "Accept": "application/vnd.github+json"}
     resp = requests.get(workflow_run.logs_url, headers=headers)
     resp.raise_for_status()
@@ -100,24 +99,26 @@ def get_workflow_run_logs(workflow_run, tc_logger: loggers.TeamCityLogger):
         line = f"{parse_log_line(line.decode())}"
         if line.startswith("##[error]"):
             error_catcher.append(line.split("##[error]")[1])
-            tc_logger.error(line)
+            # tc_logger.error(line)
         elif line.startswith("##[group]"):
             block_name = line.split("##[group]")[1]
             block_name_queue.append(block_name)
-            tc_logger.teamcity_service_messages.blockOpened(block_name)
+            # tc_logger.teamcity_service_messages.blockOpened(block_name)
         elif line.startswith("##[endgroup]") and block_name_queue:
             block_name = block_name_queue.pop()
-            tc_logger.teamcity_service_messages.blockClosed(block_name)
+            # tc_logger.teamcity_service_messages.blockClosed(block_name)
         elif m := re.match(r'##teamcity\[(\w+) timestamp=\'[^ ]+\'(.*)]', line):
             msg = ''.join(m.groups())
-            tc_logger.teamcity_service_messages.message(msg)
-        else:
-            tc_logger.info(line)
+            # tc_logger.teamcity_service_messages.message(msg)
+        # else:
+            # tc_logger.info(line)
+        print(line)
 
     if workflow_run.conclusion == "failure":
-        tc_logger.error("Workflow run failed\nPlease check the logs for more information")
+        print("Workflow run failed\nPlease check the logs for more information")
         if len(error_catcher) > 0:
-            tc_logger.error(f"Errors: {error_catcher}\n")
+            print(f"Errors: {error_catcher}\n")
+        sys.exit(1)
 
 
 def poll_status_step(job):
