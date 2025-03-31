@@ -1,8 +1,7 @@
 pipeline {
     agent any
     environment {
-        GITHUB_BEARER_TOKEN = credentials('GITHUB_BEARER_TOKEN')
-        GITHUB_REPOSITORY   = credentials('GITHUB_REPOSITORY')
+        GITHUB_TOKEN = credentials('GITHUB_BEARER_TOKEN')
     }
     stages {
         stage('Example stage 1') {
