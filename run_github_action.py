@@ -35,7 +35,7 @@ def build_dependencies_github_workflow():
 
     triggering_branch = "main"  # os.environ["TRIGGERING_BRANCH"]
     inputs = {
-        'jenkins_trigger_id': str(uuid.uuid4),
+        'jenkins_trigger_id': str(uuid.uuid4()),
     }
     workflow_run, workflow_job = trigger_dependencies_workflow_run(
         triggering_branch,
@@ -61,7 +61,7 @@ def trigger_dependencies_workflow_run(
     while not workflow_run and attempts <= 20:  # 20 attempts == 5 minutes
         time.sleep(15)
         runs = workflow.get_runs()[:10]
-        workflow_run = find_workflow_run(runs, workflow_inputs['teamcity_trigger_id'])
+        workflow_run = find_workflow_run(runs, workflow_inputs['jenkins_trigger_id'])
         if not workflow_run:
             attempts += 1
             print("Couldn't find the workflow run. Retrying...")
