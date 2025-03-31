@@ -33,7 +33,7 @@ def build_dependencies_github_workflow():
     build_scripts_repo = org.get_repo(GITHUB_REPO)
     build_scripts_workflow = build_scripts_repo.get_workflow(BUILD_SCRIPTS_WORKFLOW_NAME)
 
-    triggering_branch = os.environ["TRIGGERING_BRANCH"]
+    triggering_branch = "main"  # os.environ["TRIGGERING_BRANCH"]
     inputs = {
         'jenkins_trigger_id': str(uuid.uuid4),
     }
