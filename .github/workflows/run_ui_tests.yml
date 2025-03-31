@@ -24,8 +24,10 @@ on:
         type: string
         default: '*'
 
-  repository_dispatch:
-    types: [test_result]
+      jenkins_trigger_id:
+        description: 'Jenkins Trigger ID'
+        type: string
+        default: ''
 
 jobs:
   job1:
@@ -33,6 +35,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Run Identifier ${{ inputs.jenkins_trigger_id }}
+        if: inputs.jenkins_trigger_id != ''
+        run: echo "Run Identifier ${{ inputs.jenkins_trigger_id }}"
+
       - name: "Check out repository"
         uses: actions/checkout@v4
 
@@ -48,10 +54,3 @@ jobs:
           echo "Run ER GUI Tests: ${{ inputs.run_er_gui_tests }}"
           echo "Run Upgrade Tests: ${{ inputs.run_upgrade_tests }}"
           echo "Tests to run: ${{ inputs.tests_to_run }}"
-
-      - name: "Print something else"
-        if: ${{ github.event_name == 'repository_dispatch' }}
-        env:
-          CLIENT_PAYLOAD: ${{ github.event.client_payload }}
-        run: |
-          echo $CLIENT_PAYLOAD
