@@ -7,9 +7,7 @@ pipeline {
     stages {
         stage('Example stage 1') {
             steps {
-                node ('My Windows slave') {
-                    powershell python run_github_action.py
-                }
+                powershell "python run_github_action.py"
             }
         }
     }
