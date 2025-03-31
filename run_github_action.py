@@ -1,11 +1,11 @@
 from io import BytesIO
 import os
 import re
+import sys
 import time
 import uuid
 import zipfile
 
-import sys
 import github
 import requests
 
