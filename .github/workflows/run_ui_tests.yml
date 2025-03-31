@@ -1,0 +1,55 @@
+name: Run UI tests
+run-name: Run ${{ inputs.run_er_gui_tests && 'ER-UI ' || ''}}${{ inputs.run_kermit_tests && 'Kermit ' || ''}}${{ inputs.run_upgrade_tests && 'Upgrade ' || '' }} Tests ${{ inputs.tests_to_run }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_kermit_tests:
+        description: 'Run Kermit Tests'
+        type: boolean
+        default: false
+
+      run_er_gui_tests:
+        description: 'Run ER GUI Tests'
+        type: boolean
+        default: false
+
+      run_upgrade_tests:
+        description: 'Run Upgrade Tests'
+        type: boolean
+        default: false
+
+      tests_to_run:
+        description: 'Tests to run'
+        type: string
+        default: '*'
+
+  repository_dispatch:
+    types: [test_result]
+
+jobs:
+  job1:
+    name: Job 1
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Check out repository"
+        uses: actions/checkout@v4
+
+      - name: "Install Python"
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: "Print something"
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        run: |
+          echo "Run Kermit Tests: ${{ inputs.run_kermit_tests }}"
+          echo "Run ER GUI Tests: ${{ inputs.run_er_gui_tests }}"
+          echo "Run Upgrade Tests: ${{ inputs.run_upgrade_tests }}"
+          echo "Tests to run: ${{ inputs.tests_to_run }}"
+
+      - name: "Print something else"
+        if: ${{ github.event_name == 'repository_dispatch' }}
+        run: |
+          echo ${{ github.event.client_payload }}
