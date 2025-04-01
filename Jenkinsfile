@@ -8,7 +8,7 @@ pipeline {
             steps {
                 powershell "python -m pip install -r requirements.txt"
                 script {
-                    artifact_download_url = powershell(returnStdout: true, script: "python run_github_action.py").trim()
+                    def artifact_download_url = powershell(returnStdout: true, script: "python run_github_action.py").trim()
                 }
                 powershell """
                 \$Headers = @{
