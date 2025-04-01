@@ -16,7 +16,7 @@ pipeline {
                         'Authorization' = 'Bearer $GITHUB_TOKEN'
                         'Accept' = 'application/vnd.github.v3+json'
                     }
-                    Invoke-WebRequest -Uri ${artifact_download_url} -Headers \$Headers -OutFile 'artifact.zip'
+                    Invoke-WebRequest -Uri "${artifact_download_url}" -Headers \$Headers -OutFile 'artifact.zip'
                     '''
                 }
             }
