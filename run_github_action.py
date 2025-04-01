@@ -45,7 +45,7 @@ def build_dependencies_github_workflow():
     )
     monitor_status(workflow_run, workflow_job)
     # TODO: assumes there is only 1 artifact and it is the one that should be downloaded
-    print(workflow_job.get_artifacts()[0].archive_download_url)
+    print(workflow_run.get_artifacts()[0].archive_download_url)
     # get_workflow_run_logs(workflow_run)
 
 
