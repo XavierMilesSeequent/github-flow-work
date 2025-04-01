@@ -1,0 +1,75 @@
+{
+    "results": {
+      "tool": {
+        "name": "Leapfrog UI Tester"
+      },
+      "summary": {
+        "tests": 8,
+        "passed": 8,
+        "failed": 0,
+        "pending": 0,
+        "skipped": 0,
+        "other": 0,
+        "start": 1742242098,
+        "stop": 1742242436
+      },
+      "tests": [
+        {
+          "name": "evo_geoscience_object_reload_structural_no_changes",
+          "status": "passed",
+          "duration": 224760,
+          "message": "",
+          "trace": ""
+        },
+        {
+          "name": "evo_geoscience_object_reload_structural_additional_columns",
+          "status": "passed",
+          "duration": 245017,
+          "message": "",
+          "trace": ""
+        },
+        {
+          "name": "evo_geoscience_object_reload_structural_remove_columns",
+          "status": "passed",
+          "duration": 236808,
+          "message": "",
+          "trace": ""
+        },
+        {
+          "name": "evo_geoscience_object_reload_structural_change_column_name",
+          "status": "passed",
+          "duration": 236979,
+          "message": "",
+          "trace": ""
+        },
+        {
+          "name": "evo_geoscience_object_reload_structural_change_column_type",
+          "status": "passed",
+          "duration": 228257,
+          "message": "",
+          "trace": ""
+        },
+        {
+          "name": "evo_geoscience_object_reload_structural_import_as_new",
+          "status": "passed",
+          "duration": 218049,
+          "message": "",
+          "trace": ""
+        },
+        {
+          "name": "evo_geoscience_object_reload_structural_locked",
+          "status": "passed",
+          "duration": 173194,
+          "message": "",
+          "trace": ""
+        },
+        {
+          "name": "evo_geoscience_object_reload_structural_locked_as_new",
+          "status": "passed",
+          "duration": 166820,
+          "message": "",
+          "trace": ""
+        }
+      ]
+    }
+}

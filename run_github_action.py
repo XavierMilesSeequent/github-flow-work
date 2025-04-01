@@ -107,8 +107,8 @@ def get_workflow_run_logs(workflow_run):
         elif line.startswith("##[endgroup]") and block_name_queue:
             block_name = block_name_queue.pop()
             # tc_logger.teamcity_service_messages.blockClosed(block_name)
-        elif m := re.match(r'##teamcity\[(\w+) timestamp=\'[^ ]+\'(.*)]', line):
-            msg = ''.join(m.groups())
+        # elif m := re.match(r'##teamcity\[(\w+) timestamp=\'[^ ]+\'(.*)]', line):
+        #     msg = ''.join(m.groups())
             # tc_logger.teamcity_service_messages.message(msg)
         # else:
             # tc_logger.info(line)

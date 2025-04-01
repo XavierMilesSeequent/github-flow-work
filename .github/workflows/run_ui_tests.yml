@@ -54,3 +54,9 @@ jobs:
           echo "Run ER GUI Tests: ${{ inputs.run_er_gui_tests }}"
           echo "Run Upgrade Tests: ${{ inputs.run_upgrade_tests }}"
           echo "Tests to run: ${{ inputs.tests_to_run }}"
+
+      - name: "Upload a fake artifact"
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: ctrf-report.json
