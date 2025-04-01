@@ -7,7 +7,9 @@ pipeline {
         stage('Example stage 1') {
             steps {
                 powershell "python -m pip install -r requirements.txt"
-                def artifact_download_url = powershell(returnStdout: true, script: "python run_github_action.py").trim()
+                script {
+                    artifact_download_url = powershell(returnStdout: true, script: "python run_github_action.py").trim()
+                }
                 powershell """
                 \$Headers = @{
                     'Authorization: Bearer $GITHUB_TOKEN'
