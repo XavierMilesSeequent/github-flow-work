@@ -13,6 +13,7 @@ GITHUB_TOKEN = os.environ["GITHUB_TOKEN"]
 GITHUB_USER = "XavierMilesSeequent"
 GITHUB_REPO = "github-flow-work"
 BUILD_SCRIPTS_WORKFLOW_NAME = "run_ui_tests.yml"
+JOB_NAME = "Job 1"
 
 ANSI_ESCAPE_REGEX = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
 
@@ -43,13 +44,15 @@ def build_dependencies_github_workflow():
         build_scripts_workflow,
     )
     monitor_status(workflow_run, workflow_job)
-    get_workflow_run_logs(workflow_run)
+    # TODO: assumes there is only 1 artifact and it is the one that should be downloaded
+    print(workflow_job.get_artifacts()[0].archive_download_url)
+    # get_workflow_run_logs(workflow_run)
 
 
 def trigger_dependencies_workflow_run(
     triggering_branch: str, workflow_inputs: dict, workflow: github.Workflow
 ) -> github.WorkflowRun:
-    print("GitHub Workflow Run Initialization:")
+    # print("GitHub Workflow Run Initialization:")
     # Kick off a workflow run
     workflow_run_created = workflow.create_dispatch(triggering_branch, inputs=workflow_inputs)
     if not workflow_run_created:
@@ -64,34 +67,36 @@ def trigger_dependencies_workflow_run(
         workflow_run = find_workflow_run(runs, workflow_inputs['jenkins_trigger_id'])
         if not workflow_run:
             attempts += 1
-            print("Couldn't find the workflow run. Retrying...")
+            # print("Couldn't find the workflow run. Retrying...")
         else:
-            print(f"Workflow run found. \nURL Link: {workflow_run.html_url} \nStatus: {workflow_run.status}")
-            workflow_job = next(job for job in workflow_run.jobs() if job.name == "Job 1")
+            # print(f"Workflow run found. \nURL Link: {workflow_run.html_url} \nStatus: {workflow_run.status}")
+            workflow_job = next(job for job in workflow_run.jobs() if job.name == JOB_NAME)
     return workflow_run, workflow_job
 
 
 def monitor_status(workflow_run: github.Workflow, workflow_job: github.WorkflowJob):
     # Monitor the status and wait for the workflow to complete
-    print("GitHub Workflow Run Monitoring:")
+    # print("GitHub Workflow Run Monitoring:")
     poll_status_step(workflow_job)
     while workflow_run.conclusion is None:
         time.sleep(5)
         workflow_run.update()
-    print(f"Status: {workflow_run.status}")
-    print(f"Workflow run completed: {workflow_run.conclusion}")
+    # print(f"Status: {workflow_run.status}")
+    # print(f"Workflow run completed: {workflow_run.conclusion}")
 
 
 def get_workflow_run_logs(workflow_run):
     # Get the raw logs from the workflow run
-    print("GitHub Workflow Run Logs:")
+    # print("GitHub Workflow Run Logs:")
     headers = {"Authorization": f"Bearer {GITHUB_TOKEN}", "Accept": "application/vnd.github+json"}
     resp = requests.get(workflow_run.logs_url, headers=headers)
     resp.raise_for_status()
     content = resp.content
     logs_zip = zipfile.ZipFile(BytesIO(content), 'r')
-    log_file_name = next((f for f in logs_zip.namelist() if "/" not in f and "run build scripts" in f), None)
-    assert log_file_name, "Log file not found"
+    try:
+        log_file_name = next((filename for filename in logs_zip.namelist() if "/" not in filename and JOB_NAME in filename))
+    except StopIteration:
+        raise RuntimeError("Log file not found in the zip archive")
     log_file = logs_zip.open(log_file_name)
     block_name_queue = []
     error_catcher = []
@@ -123,14 +128,14 @@ def get_workflow_run_logs(workflow_run):
 
 def poll_status_step(job):
     for step_index, step in enumerate(job.steps):
-        print(f"Step: {step.name}...", end=" ")
+        # print(f"Step: {step.name}...", end=" ")
         while True:
             step = job.steps[step_index]
             if step.conclusion:
                 break
             time.sleep(10)
             job.update()
-        print(f"{step.conclusion}")
+        # print(f"{step.conclusion}")
 
 
 def find_workflow_run(runs, run_id):
