@@ -10,13 +10,13 @@ pipeline {
                 powershell "python -m pip install -r requirements.txt"
                 script {
                     def artifact_download_url = powershell(returnStdout: true, script: "python run_github_action.py").trim()
-                    powershell """
+                    powershell '''
                     \$Headers = @{
-                        'Authorization: Bearer $GITHUB_TOKEN'
+                        'Authorization' = 'Bearer $GITHUB_TOKEN'
                         'Accept' = 'application/vnd.github.v3+json'
                     }
                     Invoke-WebRequest -Uri $artifact_download_url -Headers \$Headers -OutFile 'artifact.zip'
-                    """
+                    '''
                 }
             }
         }
