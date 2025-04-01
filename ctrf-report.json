@@ -5,10 +5,10 @@
       },
       "summary": {
         "tests": 8,
-        "passed": 8,
-        "failed": 0,
+        "passed": 5,
+        "failed": 2,
         "pending": 0,
-        "skipped": 0,
+        "skipped": 1,
         "other": 0,
         "start": 1742242098,
         "stop": 1742242436
@@ -23,21 +23,21 @@
         },
         {
           "name": "evo_geoscience_object_reload_structural_additional_columns",
-          "status": "passed",
+          "status": "failed",
           "duration": 245017,
           "message": "",
           "trace": ""
         },
         {
           "name": "evo_geoscience_object_reload_structural_remove_columns",
-          "status": "passed",
+          "status": "failed",
           "duration": 236808,
           "message": "",
           "trace": ""
         },
         {
           "name": "evo_geoscience_object_reload_structural_change_column_name",
-          "status": "passed",
+          "status": "skipped",
           "duration": 236979,
           "message": "",
           "trace": ""
