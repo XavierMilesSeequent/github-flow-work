@@ -7,9 +7,16 @@ pipeline {
         stage('Example stage 1') {
             steps {
                 // This will install them to whichever Python is in the PATH on Jenkins
-                sh "python -m pip install -r requirements.txt"
+                sh """
+                python -m venv venv
+                . venv/bin/activate
+                python -m pip install -r requirements.txt
+                """
                 script {
-                    def artifact_download_url = sh(returnStdout: true, script: "python run_github_action.py").trim()
+                    def artifact_download_url = sh(returnStdout: true, script: """
+                    . venv/bin/activate
+                    python run_github_action.py
+                    """).trim()
                     echo "Artifact download URL: ${artifact_download_url}"
                     sh """
                     curl \
