@@ -12,6 +12,7 @@ pipeline {
                 . venv/bin/activate
                 python -m pip install -r requirements.txt
                 """
+                echo "Github branch: $BRANCH_NAME"
                 script {
                     def artifact_download_url = sh(returnStdout: true, script: """
                     . venv/bin/activate
