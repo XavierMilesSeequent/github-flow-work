@@ -34,7 +34,7 @@ def build_dependencies_github_workflow():
     build_scripts_repo = org.get_repo(GITHUB_REPO)
     build_scripts_workflow = build_scripts_repo.get_workflow(BUILD_SCRIPTS_WORKFLOW_NAME)
 
-    triggering_branch = "main"  # os.environ["TRIGGERING_BRANCH"]
+    triggering_branch = os.environ["BRANCH_NAME"]
     inputs = {
         'jenkins_trigger_id': str(uuid.uuid4()),
     }
@@ -44,8 +44,11 @@ def build_dependencies_github_workflow():
         build_scripts_workflow,
     )
     monitor_status(workflow_run, workflow_job)
-    # TODO: assumes there is only 1 artifact and it is the one that should be downloaded
-    print(workflow_run.get_artifacts()[0].archive_download_url)
+    # Print the URL link to the workflow run with the test results
+    for artifact in workflow_run.get_artifacts():
+        if artifact.name == "test-results":
+            print(artifact.archive_download_url)
+            break
     # get_workflow_run_logs(workflow_run)
 
 
