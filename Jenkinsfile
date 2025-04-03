@@ -6,11 +6,14 @@ pipeline {
     stages {
         stage('Example stage 1') {
             steps {
-                // This will install them to whichever Python is in the PATH on Jenkins
                 sh """
+                # Setup Python environment
                 python -m venv venv
                 . venv/bin/activate
                 python -m pip install -r requirements.txt
+
+                # Remove old artifacts
+                rm -rf artifact-contents
                 """
                 echo "Github branch: $BRANCH_NAME"
                 script {
