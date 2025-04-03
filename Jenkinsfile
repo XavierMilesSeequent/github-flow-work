@@ -7,19 +7,18 @@ pipeline {
         stage('Example stage 1') {
             steps {
                 // This will install them to whichever Python is in the PATH on Jenkins
-                powershell "python -m pip install -r requirements.txt"
+                sh "python -m pip install -r requirements.txt"
                 script {
-                    def artifact_download_url = powershell(returnStdout: true, script: "python run_github_action.py").trim()
+                    def artifact_download_url = sh(returnStdout: true, script: "python run_github_action.py").trim()
                     echo "Artifact download URL: ${artifact_download_url}"
-                    powershell """
-                    \$Headers = @{
-                        'Authorization' = 'Bearer $GITHUB_TOKEN'
-                        'Accept' = 'application/vnd.github.v3+json'
-                    }
-                    Invoke-WebRequest -Uri "${artifact_download_url}" -Headers \$Headers -OutFile 'artifact.zip'
+                    sh """
+                    curl \
+                        ${artifact_download_url} \
+                        -H "Authorization: $GITHUB_TOKEN" \
+                        -H "Accept: application/vnd.github.v3+json" \
+                        -o artifact.zip
 
-                    # Unzip the artifact
-                    Expand-Archive -Path 'artifact.zip' -DestinationPath './artifact-contents' -Force
+                    unzip 'artifact.zip' -d './artifact-contents'
                     """
                 }
                 publishCtrfResults('artifact-contents/ctrf-report.json')
