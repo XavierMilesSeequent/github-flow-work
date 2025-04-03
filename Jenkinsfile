@@ -20,8 +20,8 @@ pipeline {
                     echo "Artifact download URL: ${artifact_download_url}"
                     sh """
                     curl \
-                        ${artifact_download_url} \
-                        -H "Authorization: $GITHUB_TOKEN" \
+                        ${artifact_download_url} -L \
+                        -H "Authorization: Bearer $GITHUB_TOKEN" \
                         -H "Accept: application/vnd.github.v3+json" \
                         -o artifact.zip
 
