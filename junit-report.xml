@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<testsuite name="Artifically created results" tests="8">
+	<testcase classname="junit" name="evo_geoscience_object_reload_structural_no_changes" time="224.76">
+		<passed message="Test passed"/>
+	</testcase>
+	<testcase classname="junit" name="evo_geoscience_object_reload_structural_additional_columns" time="245.017">
+		<failure message="Test failed"/>
+	</testcase>
+	<testcase classname="junit" name="evo_geoscience_object_reload_structural_remove_columns" time="236.808">
+		<failure message="Test failed"/>
+	</testcase>
+	<testcase classname="junit" name="evo_geoscience_object_reload_structural_change_column_name" time="236.979">
+		<skipped/>
+	</testcase>
+	<testcase classname="junit" name="evo_geoscience_object_reload_structural_change_column_type" time="228.257">
+		<passed message="Test passed"/>
+	</testcase>
+	<testcase classname="junit" name="evo_geoscience_object_reload_structural_import_as_new" time="218.049">
+		<passed message="Test passed"/>
+	</testcase>
+	<testcase classname="junit.nested.twice" name="evo_geoscience_object_reload_structural_locked" time="173.194">
+		<passed message="Test passed"/>
+	</testcase>
+	<testcase classname="junit.nested" name="evo_geoscience_object_reload_structural_locked_as_new" time="166.82">
+		<passed message="Test passed"/>
+	</testcase>
+</testsuite>

@@ -33,6 +33,7 @@ pipeline {
                     """
                 }
                 publishCtrfResults('artifact-contents/ctrf-report.json')
+                junit('junit-report.xml')
             }
         }
     }
