@@ -5,18 +5,17 @@
 	</testcase>
 	<testcase classname="junit" name="evo_geoscience_object_reload_structural_additional_columns" time="245.017">
 		<failure message="Error setting up test: 2025-04-04T14:50:43.897216 - Timeout getting evo services.">
-			Traceback (most recent call last):
-			  File \"C:\\runner\\leapfrog\\leapfrog\\tests\\GuiTests\\guitests\\manager.py\", line 447, in run_tests_using_single_runner
-			      self.post_start(test, state)
-			  File \"C:\\runner\\leapfrog\\leapfrog\\tests\\GuiTests\\kermit_tests\\manager.py\", line 166, in post_start
-			    super().post_start(test, state)\n  File \"C:\\runner\\leapfrog\\leapfrog\\tests\\GuiTests\\guitests\\manager.py\", line 232, in post_start
-			    runner_setup.set_up_runner_on_test_process(state, test.runner_type, self.options.runner_config)
-			  File \"C:\\runner\\leapfrog\\leapfrog\\applications\\source\\ui_tester\\runner_setup\\_runner_types.py\", line 48, in set_up_runner_on_test_process
-			      raise RunnerSetUpError('Timeout getting evo services.')
-			ui_tester.runner_setup._exceptions.RunnerSetUpError: 2025-04-04T14:50:43.897216 - Timeout getting evo services.
-				
-			Machine: LeapfrogBase
-
+Traceback (most recent call last):
+	File \"C:\\runner\\leapfrog\\leapfrog\\tests\\GuiTests\\guitests\\manager.py\", line 447, in run_tests_using_single_runner
+		self.post_start(test, state)
+	File \"C:\\runner\\leapfrog\\leapfrog\\tests\\GuiTests\\kermit_tests\\manager.py\", line 166, in post_start
+	super().post_start(test, state)\n  File \"C:\\runner\\leapfrog\\leapfrog\\tests\\GuiTests\\guitests\\manager.py\", line 232, in post_start
+	runner_setup.set_up_runner_on_test_process(state, test.runner_type, self.options.runner_config)
+	File \"C:\\runner\\leapfrog\\leapfrog\\applications\\source\\ui_tester\\runner_setup\\_runner_types.py\", line 48, in set_up_runner_on_test_process
+		raise RunnerSetUpError('Timeout getting evo services.')
+ui_tester.runner_setup._exceptions.RunnerSetUpError: 2025-04-04T14:50:43.897216 - Timeout getting evo services.
+	
+Machine: LeapfrogBase
 		</failure>
 	</testcase>
 	<testcase classname="junit" name="evo_geoscience_object_reload_structural_remove_columns" time="236.808">
@@ -25,7 +24,7 @@
 		</failure>
 	</testcase>
 	<testcase classname="junit" name="evo_geoscience_object_reload_structural_change_column_name" time="236.979">
-		<skipped/>
+		<skipped message="acq101 was not run because acq100 failed to complete correctly"/>
 	</testcase>
 	<testcase classname="junit" name="evo_geoscience_object_reload_structural_change_column_type" time="228.257">
 		<passed message="Test passed"/>
